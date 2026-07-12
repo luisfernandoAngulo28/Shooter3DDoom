@@ -23,6 +23,7 @@ public class Vida : MonoBehaviour
     {
         vidaActual = vidaMax;
         if (rendererDano != null) colorOriginal = rendererDano.material.GetColor(BaseColorID);
+        ActualizarUIVida();
     }
 
     public void RecibirDano(int cantidad)
@@ -38,7 +39,14 @@ public class Vida : MonoBehaviour
             flashRoutine = StartCoroutine(FlashDanoEnemigo());
         }
 
+        ActualizarUIVida();
+
         if (vidaActual <= 0) Morir();
+    }
+
+    void ActualizarUIVida()
+    {
+        if (esJugador && GameManager.instancia != null) GameManager.instancia.ActualizarUIVida(vidaActual, vidaMax);
     }
 
     IEnumerator FlashDanoEnemigo()
@@ -51,6 +59,7 @@ public class Vida : MonoBehaviour
     public void Curar(int cantidad)
     {
         vidaActual = Mathf.Min(vidaActual + cantidad, vidaMax);
+        ActualizarUIVida();
     }
 
     void Morir()

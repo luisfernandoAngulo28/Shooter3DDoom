@@ -6,6 +6,7 @@ public class EnemigoIA : MonoBehaviour
 {
     public Transform jugador;
     public int dano = 1;
+    public float rangoDeteccion = 18f;
     public float rangoDisparo = 12f;
     public float alcance = 20f;
     public float cadencia = 1.5f;
@@ -33,6 +34,12 @@ public class EnemigoIA : MonoBehaviour
 
         float distancia = Vector3.Distance(transform.position, jugador.position);
 
+        if (distancia > rangoDeteccion || !TieneLineaDeVision())
+        {
+            agente.isStopped = true;
+            return;
+        }
+
         if (distancia <= rangoDisparo)
         {
             agente.isStopped = true;
@@ -49,6 +56,19 @@ public class EnemigoIA : MonoBehaviour
             agente.isStopped = false;
             agente.SetDestination(jugador.position);
         }
+    }
+
+    bool TieneLineaDeVision()
+    {
+        Vector3 origen = transform.position + Vector3.up * 1.5f;
+        Vector3 destino = jugador.position + Vector3.up * 1f;
+        Vector3 direccion = destino - origen;
+
+        if (Physics.Raycast(origen, direccion.normalized, out RaycastHit hit, rangoDeteccion))
+        {
+            return hit.transform == jugador || hit.transform.IsChildOf(jugador);
+        }
+        return false;
     }
 
     void MirarJugador()

@@ -373,6 +373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemigoIA
   jugador: {fileID: 0}
   dano: 1
+  rangoDeteccion: 18
   rangoDisparo: 12
   alcance: 20
   cadencia: 1.5

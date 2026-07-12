@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [Header("HUD")]
     public TMP_Text textoMunicion;
     public TMP_Text textoEnemigos;
+    public TMP_Text textoVida;
 
     [Header("Paneles")]
     public GameObject panelGameOver;
@@ -73,6 +74,11 @@ public class GameManager : MonoBehaviour
     public void ActualizarUIMunicion(int actuales, int max)
     {
         if (textoMunicion != null) textoMunicion.text = actuales + " / " + max;
+    }
+
+    public void ActualizarUIVida(int actual, int max)
+    {
+        if (textoVida != null) textoVida.text = "Vida: " + actual + " / " + max;
     }
 
     void ActualizarUIEnemigos()
